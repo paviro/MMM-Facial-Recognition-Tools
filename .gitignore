@@ -1,0 +1,4 @@
+
+*.pyc
+
+facetrainer/training.xml
