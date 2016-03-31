@@ -48,19 +48,19 @@ while True:
             label, confidence = model.predict(crop)
             cv2.rectangle(frame, (x, y), (x + w, y + h), 255)
             cv2.putText(frame, str(h), (x + w, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-            # print config.personen[label] + " - " + str(confidence)
+
             if (label != -1):
                 # If person is close to the camera use smaller POSITIVE_THRESHOLD
-                if h > 190 and confidence < 50:
-                    cv2.putText(frame, config.personen[label], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
+                if h > 190 and confidence < config.POSITIVE_THRESHOLD:
+                    cv2.putText(frame, config.personen[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                     cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                 # If person is further away from the camera but POSITIVE_THRESHOLD is still under 40 assume it is the person
-                elif h < 190 and confidence < 50:
-                    cv2.putText(frame, config.personen[label], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
+                elif h < 190 and confidence < config.POSITIVE_THRESHOLD:
+                    cv2.putText(frame, config.personen[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                     cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                 # If person is further away from the camera be a bit more generous with the POSITIVE_THRESHOLD and add a not sure statement
                 elif h < 190:
-                    cv2.putText(frame, "Vermute: " + config.personen[label], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
+                    cv2.putText(frame, "Vermute: " + config.personen[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
                     cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                 else:
                     cv2.putText(frame, "Unbekannt", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
@@ -68,7 +68,7 @@ while True:
             else:
                 cv2.putText(frame, "Unbekannt", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
 
-            # Wenn die Person nah genug ist
+            # If person is close enough
             if h > 250:
                 eyes = face.detect_eyes(face.crop(image, x, y, w, h))
                 for i in range(0, len(eyes)):
