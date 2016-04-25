@@ -1,7 +1,9 @@
-"""PaViRO MagicMirror-Extensions - Face recognition
+"""MMM-Facial-Recognition - MagicMirror Module
 Positive Image Capture Script
-Copyright 2015 Paul-Vincent Roll
-Based on work by Tony DiCola (Copyright 2013)
+The MIT License (MIT)
+
+Copyright (c) 2016 Paul-Vincent Roll (MIT License)
+Based on work by Tony DiCola (Copyright 2013) (MIT License)
 
 Run this script to capture positive images for training the face recognizer.
 """
@@ -10,7 +12,6 @@ import fnmatch
 import glob
 import os
 import sys
-import select
 
 import cv2
 
@@ -19,12 +20,8 @@ import face
 
 
 def is_letter_input(letter):
-    # Utility function to check if a specific character is available on stdin.
-    # Comparison is case insensitive.
-    if select.select([sys.stdin, ], [], [], 0.0)[0]:
-        input_char = sys.stdin.read(1)
-        return input_char.lower() == letter.lower()
-    return False
+    input_char = raw_input()
+    return input_char.lower()
 
 
 def walk_files(directory, match='*'):

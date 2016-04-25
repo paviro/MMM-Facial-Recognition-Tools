@@ -1,5 +1,12 @@
 #!/usr/bin/python
 # coding: utf8
+"""MMM-Facial-Recognition - MagicMirror Module
+Face Recognition training script config
+The MIT License (MIT)
+
+Copyright (c) 2016 Paul-Vincent Roll (MIT License)
+Based on work by Tony DiCola (Copyright 2013) (MIT License)
+"""
 
 import inspect
 import os
