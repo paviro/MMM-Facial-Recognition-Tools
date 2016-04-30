@@ -1,6 +1,6 @@
 # Facerecognition Test Tool
 With this tool you can test if your facerecognition model is working.
-The facerecognition in this tool is based on code from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box). The tool is only tested on a desktop computer, not on a Pi.
+The facerecognition in this tool is based on code from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box). The tool is only tested on a desktop computer, not on a Pi but it may work.
 
 ## Usage
 1. Make sure you have all dependencies (see bellow) installed.

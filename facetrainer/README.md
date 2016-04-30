@@ -1,5 +1,5 @@
 # Facetrainer Tool
-The scripts in this directory are based on scripts from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box) and should be used on a computer (with a webcam). You need OpenCV installed on your computer.
+The scripts in this directory are based on scripts from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box) and should be used on a computer (with a webcam). You need OpenCV installed on your computer. It may work on a Pi but is probably pretty slow.
 
 ## Usage
 ### Capturing training images

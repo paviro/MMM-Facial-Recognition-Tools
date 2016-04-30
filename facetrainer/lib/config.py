@@ -10,9 +10,7 @@ Based on work by Tony DiCola (Copyright 2013) (MIT License)
 
 import inspect
 import os
-import platform
 
-_platform = platform.system().lower()
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 # File to save and load face recognizer model.
@@ -35,5 +33,9 @@ HAAR_MIN_SIZE = (30, 30)
 
 
 def get_camera():
-    import webcam
-    return webcam.OpenCVCapture(device_id=0)
+    try:
+        import picam
+        return picam.OpenCVCapture()
+    except Exception:
+        import webcam
+        return webcam.OpenCVCapture(device_id=0)

@@ -58,8 +58,12 @@ HAAR_MIN_SIZE_EYES = (20, 20)
 
 def get_camera():
     syslog.syslog("-" * 20)
-    syslog.syslog("Beutztes System: " + _platform)
-    import webcam
-    syslog.syslog("Webcam ausgewählt...")
-    return webcam.OpenCVCapture(device_id=0)
+    try:
+        import picam
+        syslog.syslog("Picam ausgewählt...")
+        return picam.OpenCVCapture()
+    except Exception:
+        import webcam
+        syslog.syslog("Webcam ausgewählt...")
+        return webcam.OpenCVCapture(device_id=0)
     syslog.syslog("-" * 20)
