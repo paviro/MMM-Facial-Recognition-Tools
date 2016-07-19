@@ -46,11 +46,11 @@ def capture():
         # Grab the count from the last filename.
         count = int(files[-1][-7:-4]) + 1
     print 'Capturing positive training images.'
-    print 'Type c (and press enter) to capture an image.'
+    print 'Press enter to capture an image.'
     print 'Press Ctrl-C to quit.'
     while True:
-        # Check if button was pressed or 'c' was received, then capture image.
-        if is_letter_input('c'):
+        try:
+            raw_input()
             print 'Capturing image...'
             image = camera.read()
             # Convert image to grayscale.
@@ -59,7 +59,7 @@ def capture():
             result = face.detect_single(image)
             if result is None:
                 print 'Could not detect single face!  Check the image in capture.pgm' \
-                   ' to see what was captured and try again with only one face visible.'
+                        ' to see what was captured and try again with only one face visible.'
                 continue
             x, y, w, h = result
             # Crop image as close as possible to desired face aspect ratio.
@@ -70,6 +70,9 @@ def capture():
             cv2.imwrite(filename, crop)
             print 'Found face and wrote training image', filename
             count += 1
+        except KeyboardInterrupt:
+            camera.stop()
+            break
 
 
 def convert():
