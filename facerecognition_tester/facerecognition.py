@@ -23,13 +23,13 @@ print('Loading training data...')
 
 if config.RECOGNITION_ALGORITHM == 1:
     print "ALGORITHM: LBPH"
-    model = cv2.createLBPHFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
+    model = cv2.face.createLBPHFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
 elif config.RECOGNITION_ALGORITHM == 2:
     print "ALGORITHM: Fisher"
-    model = cv2.createFisherFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
+    model = cv2.face.createFisherFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
 else:
     print "ALGORITHM: Eigen"
-    model = cv2.createEigenFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
+    model = cv2.face.createEigenFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
 
 model.load("training.xml")
 print('Training data loaded!')
