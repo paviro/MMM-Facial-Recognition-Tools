@@ -109,11 +109,11 @@ if __name__ == '__main__':
 
     # set the choosen algorithm
     if algorithm_choice == "1":
-        model = cv2.createLBPHFaceRecognizer()
+        model = cv2.face.createLBPHFaceRecognizer()
     elif algorithm_choice == "2":
-        model = cv2.createFisherFaceRecognizer()
+        model = cv2.face.createFisherFaceRecognizer()
     elif algorithm_choice == "3":
-        model = cv2.createEigenFaceRecognizer()
+        model = cv2.face.createEigenFaceRecognizer()
 
     model.train(np.asarray(faces), np.asarray(labels))
 
