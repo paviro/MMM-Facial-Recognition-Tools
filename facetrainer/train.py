@@ -100,7 +100,7 @@ if __name__ == '__main__':
     print 'Read', pos_count, 'positive images and', labels.count(0), 'negative images.'
     print
     for j in range(1, max(labels) + 1):
-        print str(labels.count(j)) + " Bilder von " + IMAGE_DIRS[j - 1]
+        print str(labels.count(j)) + " images from subject " + IMAGE_DIRS[j - 1]
 
     # Train model
     print '-' * 20
@@ -121,5 +121,5 @@ if __name__ == '__main__':
     model.save(config.TRAINING_FILE)
     print 'Training data saved to', config.TRAINING_FILE
     print
-    print "Please add or update (if you added new people not just new images) " + str(IMAGE_DIRS) + " in your config file. You can change the names to whatever you want, just keep the same order and you'll be fine."
+    print "Please add or update (if you added new people not just new images) " + str(IMAGE_DIRS) + " inside config.js (mirror module) or config.py (model tester). You can change the names to whatever you want, just keep the same order and you'll be fine."
     print "Please add " + str(algorithm_choice) + " as your choosen algorithm inside config.js (mirror module) or config.py (model tester)."

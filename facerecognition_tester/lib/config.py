@@ -15,7 +15,7 @@ import syslog
 _platform = platform.system().lower()
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
-personen = []
+users = []
 
 # Edit the values below to configure the training and usage of the
 # face recognition box.

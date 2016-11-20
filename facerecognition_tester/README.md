@@ -1,11 +1,11 @@
 # Facerecognition Test Tool
 With this tool you can test if your facerecognition model is working.
-The facerecognition in this tool is based on code from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box). The tool is only tested on a desktop computer, not on a Pi but it may work.
+The facerecognition in this tool is based on code from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box). The tool is only tested on a desktop computer, not on a Pi but it may work if you use a webcam not a PiCam.
 
 ## Usage
 1. Make sure you have all dependencies (see bellow) installed.
 2. Copy your `training.xml` from `tools/facetrainer` into the root folder of this tool.
-3. In `tools/facerecognition_tester/lib/config.py` add add your training labels from `tools/facetrainer` under `personen = []` and specify the used algorithm.
+3. In `tools/facerecognition_tester/lib/config.py` add add your training labels from `tools/facetrainer` under `users = []` and specify the used algorithm.
 4. Enter the `tools/facerecognition_tester` directory from a terminal and run `python facerecognition.py`.
 
 ## Dependencies

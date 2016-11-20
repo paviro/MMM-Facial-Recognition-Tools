@@ -18,6 +18,7 @@ import cv2  # OpenCV Library
 import lib.face as face
 import lib.config as config
 
+print('Please Note: No PiCam support is currently implemented, only webcams are supported!')
 # Load training data into model
 print('Loading training data...')
 
@@ -56,19 +57,18 @@ while True:
             label, confidence = model.predict(crop)
             cv2.rectangle(frame, (x, y), (x + w, y + h), 255)
             cv2.putText(frame, str(h), (x + w, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-
-            if (label != -1):
+            if (label != -1 and label != 0):
                 # If person is close to the camera use smaller POSITIVE_THRESHOLD
                 if h > 190 and confidence < config.POSITIVE_THRESHOLD:
-                    cv2.putText(frame, config.personen[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
+                    cv2.putText(frame, config.users[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                     cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                 # If person is further away from the camera but POSITIVE_THRESHOLD is still under 40 assume it is the person
                 elif h < 190 and confidence < config.POSITIVE_THRESHOLD:
-                    cv2.putText(frame, config.personen[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
+                    cv2.putText(frame, config.users[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                     cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                 # If person is further away from the camera be a bit more generous with the POSITIVE_THRESHOLD and add a not sure statement
                 elif h < 190:
-                    cv2.putText(frame, "Vermute: " + config.personen[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
+                    cv2.putText(frame, "Vermute: " + config.users[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
                     cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                 else:
                     cv2.putText(frame, "Unbekannt", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
