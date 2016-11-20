@@ -18,7 +18,6 @@ import cv2  # OpenCV Library
 import lib.face as face
 import lib.config as config
 
-print('Please Note: No PiCam support is currently implemented, only webcams are supported!')
 # Load training data into model
 print('Loading training data...')
 
@@ -35,11 +34,11 @@ else:
 model.load("training.xml")
 print('Training data loaded!')
 
-capture = cv2.VideoCapture(0)
+camera = config.get_camera()
 
 while True:
-    # Capture video feed
-    ret, frame = capture.read()
+    # camera video feed
+    frame = camera.read()
     image = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
     faces = face.detect_face(image)
@@ -91,6 +90,6 @@ while True:
     if cv2.waitKey(1) == ord('q'):
         break
 
-# Release capture and close windows
-capture.release()
+# Release camera and close windows
+camera.stop()
 cv2.destroyAllWindows()

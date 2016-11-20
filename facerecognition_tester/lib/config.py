@@ -10,7 +10,6 @@ Based on work by Tony DiCola (Copyright 2013) (MIT License)
 import inspect
 import os
 import platform
-import syslog
 
 _platform = platform.system().lower()
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -57,13 +56,13 @@ HAAR_MIN_SIZE_EYES = (20, 20)
 
 
 def get_camera():
-    syslog.syslog("-" * 20)
+    print("-" * 20)
     try:
         import picam
-        syslog.syslog("Picam ausgewählt...")
+        print("Picam ausgewählt...")
         return picam.OpenCVCapture()
     except Exception:
         import webcam
-        syslog.syslog("Webcam ausgewählt...")
+        print("Webcam ausgewählt...")
         return webcam.OpenCVCapture(device_id=0)
-    syslog.syslog("-" * 20)
+    print("-" * 20)
