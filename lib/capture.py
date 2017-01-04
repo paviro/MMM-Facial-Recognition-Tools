@@ -7,6 +7,7 @@ Based on work by Tony DiCola (Copyright 2013) (MIT License)
 
 Run this script to capture positive images for training the face recognizer.
 """
+from __future__ import division
 
 import fnmatch
 import glob
@@ -17,7 +18,6 @@ import cv2
 
 import config
 import face
-
 
 def is_letter_input(letter):
     input_char = raw_input()
@@ -90,14 +90,33 @@ def convert():
         if not re.match('.+\.(jpg|jpeg)$', filename, re.IGNORECASE):
             print("file {0} does not have the correct file extention.".format(filename))
             continue
-        image = filename
-        image = cv2.imread(image)
+        print("processing {0}".format(filename))
+        image = cv2.imread(filename)
+        height, width, channels = image.shape
         image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        # TODO: check for multiple faces and warn
         # Get coordinates of single face in captured image.
         result = face.detect_single(image)
         if result is None:
-            print('Could not detect single face in file {0}'.format(filename))
-            continue
+            if (height + width > 800):
+                # it's a big image resize it and try again
+                mult = 0.5
+                print('Resizing from ({0},{1}) -> ({2},{3})'
+                      .format(height, width, int(mult*height), int(mult*width)))
+                image2 = cv2.resize(image, None, fx=mult, fy=mult)
+                result = face.detect_single(image2)
+                if result is None:
+                    mult = 0.25
+                    print('Resizing from ({0},{1}) -> ({2},{3})'
+                          .format(height, width, int(mult*height), int(mult*width)))
+                    image2 = cv2.resize(image, None, fx=mult, fy=mult)
+                    result = face.detect_single(image2)
+                if result is not None:
+                    print('It worked, found a face in resized image!')
+                    image = image2
+            if result is None:
+                print('No face found')
+                continue
         x, y, w, h = result
         # Crop image as close as possible to desired face aspect ratio.
         # Might be smaller if face is near edge of image.
