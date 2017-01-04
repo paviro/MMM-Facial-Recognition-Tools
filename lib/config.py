@@ -40,10 +40,8 @@ FACE_HEIGHT = 112
 HAAR_FACES = 'lib/haarcascade_frontalface.xml'
 HAAR_EYES = 'lib/haarcascade_eye.xml'
 HAAR_SCALE_FACTOR = 1.3
-HAAR_MIN_NEIGHBORS = 4
-HAAR_MIN_NEIGHBORS_FACE = 3
+HAAR_MIN_NEIGHBORS_FACE = 4     # 4 or 3 trainer and tester used different values.
 HAAR_MIN_NEIGHBORS_EYES = 2
-HAAR_MIN_SIZE = (30, 30)
 HAAR_MIN_SIZE_FACE = (30, 30)
 HAAR_MIN_SIZE_EYES = (20, 20)
 

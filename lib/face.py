@@ -14,20 +14,32 @@ def detect_single(image):
     """Return bounds (x, y, width, height) of detected face in grayscale image.
     If no face or more than one face are detected, None is returned.
     """
-    faces = haar_faces.detectMultiScale(image, scaleFactor=config.HAAR_SCALE_FACTOR, minNeighbors=config.HAAR_MIN_NEIGHBORS, minSize=config.HAAR_MIN_SIZE, flags=cv2.CASCADE_SCALE_IMAGE)
+    faces = haar_faces.detectMultiScale(image,
+                                        scaleFactor=config.HAAR_SCALE_FACTOR,
+                                        minNeighbors=config.HAAR_MIN_NEIGHBORS_FACE,
+                                        minSize=config.HAAR_MIN_SIZE_FACE,
+                                        flags=cv2.CASCADE_SCALE_IMAGE)
     if len(faces) != 1:
         return None
     return faces[0]
 
 def detect_faces(image):
     """Return bounds (x, y, width, height) of detected face in grayscale image.
-    return all faces
+    return all faces found in the image
     """
-    faces = haar_faces.detectMultiScale(image, scaleFactor=config.HAAR_SCALE_FACTOR, minNeighbors=config.HAAR_MIN_NEIGHBORS_FACE, minSize=config.HAAR_MIN_SIZE_FACE, flags=cv2.CASCADE_SCALE_IMAGE)
+    faces = haar_faces.detectMultiScale(image,
+                                        scaleFactor=config.HAAR_SCALE_FACTOR,
+                                        minNeighbors=config.HAAR_MIN_NEIGHBORS_FACE,
+                                        minSize=config.HAAR_MIN_SIZE_FACE,
+                                        flags=cv2.CASCADE_SCALE_IMAGE)
     return faces
 
 def detect_eyes(image):
-    eyes = eyeCascade.detectMultiScale(image, scaleFactor=config.HAAR_SCALE_FACTOR, minNeighbors=config.HAAR_MIN_NEIGHBORS_EYES, minSize=config.HAAR_MIN_SIZE_EYES, flags=cv2.CASCADE_SCALE_IMAGE)
+    eyes = eyeCascade.detectMultiScale(image,
+                                       scaleFactor=config.HAAR_SCALE_FACTOR,
+                                       minNeighbors=config.HAAR_MIN_NEIGHBORS_EYES,
+                                       minSize=config.HAAR_MIN_SIZE_EYES,
+                                       flags=cv2.CASCADE_SCALE_IMAGE)
     return eyes
 
 def crop(image, x, y, w, h):
@@ -45,4 +57,5 @@ def crop(image, x, y, w, h):
 def resize(image):
     """Resize a face image to the proper size for training and detection.
     """
-    return cv2.resize(image, (config.FACE_WIDTH, config.FACE_HEIGHT), interpolation=cv2.INTER_LANCZOS4)
+    return cv2.resize(image, (config.FACE_WIDTH, config.FACE_HEIGHT),
+                      interpolation=cv2.INTER_LANCZOS4)

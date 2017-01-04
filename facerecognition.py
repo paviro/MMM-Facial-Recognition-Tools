@@ -45,7 +45,7 @@ while True:
 
     image = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
-    faces = face.detect_face(image)
+    faces = face.detect_faces(image)
     if faces is not None:
         for i in range(0, len(faces)):
             x, y, w, h = faces[i]
