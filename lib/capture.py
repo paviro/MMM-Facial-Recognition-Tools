@@ -11,7 +11,7 @@ Run this script to capture positive images for training the face recognizer.
 import fnmatch
 import glob
 import os
-import sys
+import re
 
 import cv2
 
@@ -86,14 +86,17 @@ def convert():
     if len(files) > 0:
         # Grab the count from the last filename.
         count = int(files[-1][-7:-4]) + 1
-    for filename in walk_files(RAW_DIR, '*.jpg'):
+    for filename in walk_files(RAW_DIR, '*'):
+        if not re.match('.+\.(jpg|jpeg)$', filename, re.IGNORECASE):
+            print("file {0} does not have the correct file extention.".format(filename))
+            continue
         image = filename
         image = cv2.imread(image)
         image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         # Get coordinates of single face in captured image.
         result = face.detect_single(image)
         if result is None:
-            print 'Could not detect single face!'
+            print('Could not detect single face in file {0}'.format(filename))
             continue
         x, y, w, h = result
         # Crop image as close as possible to desired face aspect ratio.
