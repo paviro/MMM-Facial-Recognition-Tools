@@ -23,15 +23,30 @@ import os
 # Load training data into model
 print('Loading training data...')
 
+# Threshold for the confidence of a recognized face before it's considered a
+# positive match.  Confidence values below this threshold will be considered
+# a positive match because the lower the confidence value, or distance, the
+# more confident the algorithm is that the face was correctly detected.
+# Start with a value of 3000, but you might need to tweak this value down if
+# you're getting too many false positives (incorrectly recognized faces), or up
+# if too many false negatives (undetected faces).
+# POSITIVE_THRESHOLD = 3500.0
+if config.RECOGNITION_ALGORITHM == 1:
+        POSITIVE_THRESHOLD = 80
+elif config.RECOGNITION_ALGORITHM == 2:
+        POSITIVE_THRESHOLD = 250
+else:
+        POSITIVE_THRESHOLD = 3000
+
 if config.RECOGNITION_ALGORITHM == 1:
     print "ALGORITHM: LBPH"
-    model = cv2.createLBPHFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
+    model = cv2.createLBPHFaceRecognizer(threshold=POSITIVE_THRESHOLD)
 elif config.RECOGNITION_ALGORITHM == 2:
     print "ALGORITHM: Fisher"
-    model = cv2.createFisherFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
+    model = cv2.createFisherFaceRecognizer(threshold=POSITIVE_THRESHOLD)
 else:
     print "ALGORITHM: Eigen"
-    model = cv2.createEigenFaceRecognizer(threshold=config.POSITIVE_THRESHOLD)
+    model = cv2.createEigenFaceRecognizer(threshold=POSITIVE_THRESHOLD)
 
 model.load("training.xml")
 print('Training data loaded!')
@@ -59,28 +74,53 @@ while True:
 
             label, confidence = model.predict(crop)
             cv2.rectangle(frame, (x, y), (x + w, y + h), 255)
-            cv2.putText(frame, str(h), (x + w, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+            cv2.putText(frame, str(h), (x + w, y + h + 15),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
             if (label != -1 and label != 0):
-                # If person is close to the camera use smaller POSITIVE_THRESHOLD
-                if h > 190 and confidence < config.POSITIVE_THRESHOLD:
-                    cv2.putText(frame, config.users[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
-                    cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                # If person is close to the camera use smaller
+                # POSITIVE_THRESHOLD
+                if h > 190 and confidence < POSITIVE_THRESHOLD:
+                    cv2.putText(frame,
+                                config.users[label - 1],
+                                (x - 3, y - 8),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                1.5,
+                                (255, 255, 255),
+                                1)
+                    cv2.putText(frame,
+                                str(confidence),
+                                (x - 2, y + h + 15),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                0.5,
+                                (255, 255, 255),
+                                1)
                     print('User:' + config.users[label - 1])    
-                # If person is further away from the camera but POSITIVE_THRESHOLD is still under 40 assume it is the person
-                elif h <= 190 and confidence < config.POSITIVE_THRESHOLD:
-                    cv2.putText(frame, config.users[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
-                    cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                # If person is further away from the camera but
+                # POSITIVE_THRESHOLD is still under 40 assume it is
+                # the person
+                elif h <= 190 and confidence < POSITIVE_THRESHOLD:
+                    cv2.putText(frame, config.users[label - 1], (x - 3, y - 8),
+                                cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
+                    cv2.putText(frame, str(confidence), (x - 2, y + h + 15),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                     print('User:' + config.users[label - 1])
-                # If person is further away from the camera be a bit more generous with the POSITIVE_THRESHOLD and add a not sure statement
+                # If person is further away from the camera be a bit
+                # more generous with the POSITIVE_THRESHOLD and add a
+                # not sure statement
                 elif h < 190:
-                    cv2.putText(frame, "Guess: " + config.users[label - 1], (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 1)
-                    cv2.putText(frame, str(confidence), (x - 2, y + h + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, "Guess: " + config.users[label - 1],
+                                (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                                (255, 255, 255), 1)
+                    cv2.putText(frame, str(confidence), (x - 2, y + h + 15),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                     print('Guess:' + config.users[label - 1])
                 else:
-                    cv2.putText(frame, "Unknown", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
+                    cv2.putText(frame, "Unknown", (x, y - 5),
+                                cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                     print('Unknown face')
             else:
-                cv2.putText(frame, "Unknown", (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
+                cv2.putText(frame, "Unknown", (x, y - 5),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                 print('Unknown face')
 
             # If person is close enough
@@ -88,8 +128,13 @@ while True:
                 eyes = face.detect_eyes(face.crop(image, x, y, w, h))
                 for i in range(0, len(eyes)):
                     x, y, w, h = eyes[i]
-                    cv2.rectangle(frame, (x + x_face, y + y_face - 30), (x + x_face + w + 10, y + y_face + h - 40), (94, 255, 0))
-                    cv2.putText(frame, "Eye " + str(i), (x + x_face, y + y_face - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                    cv2.rectangle(frame, (x + x_face, y + y_face - 30),
+                                  (x + x_face + w + 10, y + y_face + h - 40),
+                                  (94, 255, 0))
+                    cv2.putText(frame, "Eye " + str(i),
+                                (x + x_face, y + y_face - 5),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                                (255, 255, 255), 1)
 
     if ('DISPLAY' in os.environ):
         # Display Image
