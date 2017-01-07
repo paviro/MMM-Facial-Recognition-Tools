@@ -26,8 +26,16 @@ With this tool you can test if your facerecognition model is working.
 ## Usage
 1. Make sure you have all dependencies (see bellow) installed.
 2. Make sure your `training.xml` from running `train.py` is in this directory
-3. In `lib/config.py` add add your training labels from training under `users = []` and specify the used algorithm.
-4. Run `python facerecognition.py`.
+3. specify the face recognition algorithm in the environment with
+```
+export FACE_ALGORITHM=1
+```
+4. specify your user labels in the environment with
+
+```
+export FACE_USERS=Alice,Bob,Casey,Doug
+```
+5. Run `python facerecognition.py`.
 
 ## Dependencies
 - [OpenCV](http://opencv.org) (sudo apt-get install libopencv-dev python-opencv)

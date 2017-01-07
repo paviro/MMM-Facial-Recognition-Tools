@@ -27,7 +27,16 @@ else:
 
 # Edit the values below to configure the training and usage of the
 # face recognition box.
-RECOGNITION_ALGORITHM = 1
+if ('FACE_ALGORITHM' in os.environ):
+    RECOGNITION_ALGORITHM = int(os.environ['FACE_ALGORITHM'])
+    print("Using FACE_ALGORITM: {0}".format(RECOGNITION_ALGORITHM))
+    if RECOGNITION_ALGORITHM < 1 or RECOGNITION_ALGORITHM > 3:
+        print("WARNING: face algorithm must be in the range 1-3")
+        RECOGNITION_ALGORITHM = 1
+        os._exit(1)
+else:
+    RECOGNITION_ALGORITHM = 1
+    print("Using default FACE_ALGORITM: {0}".format(RECOGNITION_ALGORITHM))
 
 # File to save and load face recognizer model.
 TRAINING_FILE = 'training.xml'
