@@ -14,12 +14,16 @@ import platform
 _platform = platform.system().lower()
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
-# NOTE: Substitute your own user names here. These are just placeholders, and you will get errors
-# if your training.xml file has more than 10 user classes.
-users = ["User1", "User2", "User3", "User4", "User5", "User6", "User7", "User8", "User9", "User10"]
-
-if (users[0] == "User1"):
-    print('Do not forget to customize the user name list in config.py')
+if ('FACE_USERS' in os.environ):
+    u = os.environ['FACE_USERS']
+    users = u.split(',')
+    print(users)
+else:
+    # NOTE: Substitute your own user names here. These are just
+    # placeholders, and you will get errors if your training.xml file
+    # has more than 10 user classes.
+    users = ["User1", "User2", "User3", "User4", "User5", "User6", "User7", "User8", "User9", "User10"]
+    print('Remember to set the name list environment variable FACE_USERS')
 
 # Edit the values below to configure the training and usage of the
 # face recognition box.
