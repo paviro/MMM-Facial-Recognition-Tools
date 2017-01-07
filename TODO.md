@@ -1,5 +1,10 @@
 # TODO
 
+## opencv 3 support
+
+* detect opencv version 2 or 3 and use appropriate modules [start with this patch](https://github.com/falgard/MMM-Facial-Recognition-Tools/commit/06b303190893e5e6dddf35bd1a67f88abb8683b6)
+* harvest other changes from [falgard](https://github.com/falgard/MMM-Facial-Recognition-Tools/commits/master)
+
 ## capture.py and lib/capture.py
 
 * check for multiple faces in image, warn.
