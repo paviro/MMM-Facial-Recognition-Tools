@@ -20,34 +20,9 @@ import lib.config as config
 import time
 import os
 
-# Load training data into model
+model = config.model(config.RECOGNITION_ALGORITHM, config.POSITIVE_THRESHOLD)
+
 print('Loading training data...')
-
-# Threshold for the confidence of a recognized face before it's considered a
-# positive match.  Confidence values below this threshold will be considered
-# a positive match because the lower the confidence value, or distance, the
-# more confident the algorithm is that the face was correctly detected.
-# Start with a value of 3000, but you might need to tweak this value down if
-# you're getting too many false positives (incorrectly recognized faces), or up
-# if too many false negatives (undetected faces).
-# POSITIVE_THRESHOLD = 3500.0
-if config.RECOGNITION_ALGORITHM == 1:
-        POSITIVE_THRESHOLD = 80
-elif config.RECOGNITION_ALGORITHM == 2:
-        POSITIVE_THRESHOLD = 250
-else:
-        POSITIVE_THRESHOLD = 3000
-
-if config.RECOGNITION_ALGORITHM == 1:
-    print "ALGORITHM: LBPH"
-    model = cv2.createLBPHFaceRecognizer(threshold=POSITIVE_THRESHOLD)
-elif config.RECOGNITION_ALGORITHM == 2:
-    print "ALGORITHM: Fisher"
-    model = cv2.createFisherFaceRecognizer(threshold=POSITIVE_THRESHOLD)
-else:
-    print "ALGORITHM: Eigen"
-    model = cv2.createEigenFaceRecognizer(threshold=POSITIVE_THRESHOLD)
-
 model.load("training.xml")
 print('Training data loaded!')
 
@@ -64,7 +39,7 @@ while True:
     if faces is not None:
         for i in range(0, len(faces)):
             x, y, w, h = faces[i]
-            # x und y cordinaten des Gesichts speichern um ausschnittsabsuchungen wieder zu normalisieren
+            # x and y coordinates of the face
             x_face = x
             y_face = y
             if config.RECOGNITION_ALGORITHM == 1:
@@ -79,7 +54,7 @@ while True:
             if (label != -1 and label != 0):
                 # If person is close to the camera use smaller
                 # POSITIVE_THRESHOLD
-                if h > 190 and confidence < POSITIVE_THRESHOLD:
+                if h > 190 and confidence < config.POSITIVE_THRESHOLD:
                     cv2.putText(frame,
                                 config.users[label - 1],
                                 (x - 3, y - 8),
@@ -95,19 +70,19 @@ while True:
                                 (255, 255, 255),
                                 1)
                     print('User:' + config.users[label - 1])    
-                # If person is further away from the camera but
-                # POSITIVE_THRESHOLD is still under 40 assume it is
-                # the person
-                elif h <= 190 and confidence < POSITIVE_THRESHOLD:
+                elif h <= 190 and confidence < config.POSITIVE_THRESHOLD:
+                    # If person is further away from the camera but
+                    # POSITIVE_THRESHOLD is still under 40 assume it is
+                    # the person
                     cv2.putText(frame, config.users[label - 1], (x - 3, y - 8),
                                 cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                     cv2.putText(frame, str(confidence), (x - 2, y + h + 15),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
                     print('User:' + config.users[label - 1])
-                # If person is further away from the camera be a bit
-                # more generous with the POSITIVE_THRESHOLD and add a
-                # not sure statement
                 elif h < 190:
+                    # If person is further away from the camera be a bit
+                    # more generous with the POSITIVE_THRESHOLD and add a
+                    # not sure statement
                     cv2.putText(frame, "Guess: " + config.users[label - 1],
                                 (x - 3, y - 8), cv2.FONT_HERSHEY_SIMPLEX, 1,
                                 (255, 255, 255), 1)
@@ -123,8 +98,8 @@ while True:
                             cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 1)
                 print('Unknown face')
 
-            # If person is close enough
             if h > 250:
+                # If person is close enough, mark the eyes
                 eyes = face.detect_eyes(face.crop(image, x, y, w, h))
                 for i in range(0, len(eyes)):
                     x, y, w, h = eyes[i]

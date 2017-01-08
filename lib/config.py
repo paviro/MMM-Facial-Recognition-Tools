@@ -10,9 +10,36 @@ Based on work by Tony DiCola (Copyright 2013) (MIT License)
 import inspect
 import os
 import platform
+import cv2
+
+(CV_MAJOR_VER, CV_MINOR_VER, mv1, mv2) = cv2.__version__.split(".")
 
 _platform = platform.system().lower()
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+
+RECOGNITION_ALGORITHM = 1
+POSITIVE_THRESHOLD = 80
+
+def set_recognition_algorithm(algorithm):
+    if algorithm < 1 or algorithm > 3:
+        print("WARNING: face algorithm must be in the range 1-3")
+        RECOGNITION_ALGORITHM = 1
+        os._exit(1)        
+    RECOGNITION_ALGORITHM = algorithm
+    # Threshold for the confidence of a recognized face before it's considered a
+    # positive match.  Confidence values below this threshold will be considered
+    # a positive match because the lower the confidence value, or distance, the
+    # more confident the algorithm is that the face was correctly detected.
+    # Start with a value of 3000, but you might need to tweak this value down if
+    # you're getting too many false positives (incorrectly recognized faces), or up
+    # if too many false negatives (undetected faces).
+    # POSITIVE_THRESHOLD = 3500.0
+    if RECOGNITION_ALGORITHM == 1:
+        POSITIVE_THRESHOLD = 80
+    elif RECOGNITION_ALGORITHM == 2:
+        POSITIVE_THRESHOLD = 250
+    else:
+        POSITIVE_THRESHOLD = 3000
 
 if ('FACE_USERS' in os.environ):
     u = os.environ['FACE_USERS']
@@ -28,16 +55,13 @@ else:
 # Edit the values below to configure the training and usage of the
 # face recognition box.
 if ('FACE_ALGORITHM' in os.environ):
-    RECOGNITION_ALGORITHM = int(os.environ['FACE_ALGORITHM'])
+    set_recognition_algorithm(int(os.environ['FACE_ALGORITHM']))
     print("Using FACE_ALGORITM: {0}".format(RECOGNITION_ALGORITHM))
-    if RECOGNITION_ALGORITHM < 1 or RECOGNITION_ALGORITHM > 3:
-        print("WARNING: face algorithm must be in the range 1-3")
-        RECOGNITION_ALGORITHM = 1
-        os._exit(1)
 else:
-    RECOGNITION_ALGORITHM = 1
+    set_recognition_algorithm(1)
     print("Using default FACE_ALGORITM: {0}".format(RECOGNITION_ALGORITHM))
 
+        
 # File to save and load face recognizer model.
 TRAINING_FILE = 'training.xml'
 TRAINING_DIR = './training_data/'
@@ -67,3 +91,43 @@ def get_camera():
     except Exception:
         import webcam
         return webcam.OpenCVCapture(device_id=0)
+
+def is_cv2():
+    if CV_MAJOR_VER == 2:
+        return True
+    else:
+        return False
+
+def is_cv3():
+    if CV_MAJOR_VER == 3:
+        return True
+    else:
+        return False
+    
+def model(algorithm,thresh):
+    # set the choosen algorithm
+    model = None
+    if is_cv3():
+        # OpenCV version renamed the face module
+        if config.is_sv3:
+            import cv2face
+        if algorithm == 1:
+            model = cv2face.createLBPHFaceRecognizer(threshold=thresh)
+        elif algorithm == 2:
+            model = cv2face.createFisherFaceRecognizer(threshold=thresh)
+        elif algorithm == 3:
+            model = cv2face.createEigenFaceRecognizer(threshold=thresh)
+        else:
+            print("WARNING: face algorithm must be in the range 1-3")
+            os._exit(1)                    
+    else:
+        if algorithm == 1:
+            model = cv2.createLBPHFaceRecognizer(threshold=thresh)
+        elif algorithm == 2:
+            model = cv2.createFisherFaceRecognizer(threshold=thresh)
+        elif algorithm == 3:
+            model = cv2.createEigenFaceRecognizer(threshold=thresh)
+        else:
+            print("WARNING: face algorithm must be in the range 1-3")
+            os._exit(1)                    
+    return model

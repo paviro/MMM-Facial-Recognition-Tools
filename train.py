@@ -33,7 +33,7 @@ print "[1] LBPHF (recommended)"
 print "[2] Fisherfaces"
 print "[3] Eigenfaces"
 
-algorithm_choice = raw_input("--> ")
+algorithm_choice = int(raw_input("--> "))
 print
 
 
@@ -105,15 +105,10 @@ if __name__ == '__main__':
     # Train model
     print '-' * 20
     print
-    print 'Training model...'
+    print('Training model type {0} with threshold {1}'
+          .format(config.RECOGNITION_ALGORITHM, config.POSITIVE_THRESHOLD))
 
-    # set the choosen algorithm
-    if algorithm_choice == "1":
-        model = cv2.createLBPHFaceRecognizer()
-    elif algorithm_choice == "2":
-        model = cv2.createFisherFaceRecognizer()
-    elif algorithm_choice == "3":
-        model = cv2.createEigenFaceRecognizer()
+    model = config.model(config.RECOGNITION_ALGORITHM, config.POSITIVE_THRESHOLD)
 
     model.train(np.asarray(faces), np.asarray(labels))
 
