@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # coding: utf8
 """MMM-Facial-Recognition - MagicMirror Module
 Face Recognition Testing Script
