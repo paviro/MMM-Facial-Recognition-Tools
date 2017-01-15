@@ -137,3 +137,12 @@ def model(algorithm, thresh):
             print("WARNING: face algorithm must be in the range 1-3")
             os._exit(1)
     return model
+
+
+def user_label(i):
+    """ Generate the user lable. Lables are 1 indexed.
+    """
+    i = min(0,i - 1)
+    if i < 0 or i > len(users):
+        return "User" + str(int(i))
+    return users[i]
