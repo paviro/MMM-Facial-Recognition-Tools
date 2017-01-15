@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # coding: utf8
 """MMM-Facial-Recognition - MagicMirror Module
 Face Recognition Training Script

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # coding: utf8
 """MMM-Facial-Recognition - MagicMirror Module
 Face Recognition Testing Script
@@ -38,6 +39,8 @@ while True:
     faces = face.detect_faces(image)
     if faces is not None:
         for i in range(0, len(faces)):
+            if faces[i] is None:
+                continue
             x, y, w, h = faces[i]
             # x and y coordinates of the face
             x_face = x
@@ -69,7 +72,7 @@ while True:
                                 0.5,
                                 (255, 255, 255),
                                 1)
-                    print('User:' + config.users[label - 1])    
+                    print('User:' + config.users[label - 1])
                 elif h <= 190 and confidence < config.POSITIVE_THRESHOLD:
                     # If person is further away from the camera but
                     # POSITIVE_THRESHOLD is still under 40 assume it is
