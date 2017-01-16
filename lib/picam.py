@@ -13,6 +13,7 @@ import threading
 
 from threading import Thread
 
+
 class OpenCVCapture(Thread):
     def __init__(self):
         Thread.__init__(self)
@@ -23,7 +24,7 @@ class OpenCVCapture(Thread):
     def run(self):
         with picamera.PiCamera() as camera:
             camera.resolution = (620, 540)
-#            camera.start_preview()
+            # camera.start_preview()
             stream = io.BytesIO()
             for stream in camera.capture_continuous(stream, format='jpeg', use_video_port=True):
                 self.lock.acquire()
@@ -36,11 +37,9 @@ class OpenCVCapture(Thread):
                     stream.seek(0)
                 finally:
                     self.lock.release()
-                if self.running == False:
+                if self.running is False:
                     break
-
-#            camera.stop_preview()
-
+            # camera.stop_preview()
 
     def read(self):
         """Read a single frame from the camera and return the data as an OpenCV

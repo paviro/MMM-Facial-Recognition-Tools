@@ -51,10 +51,17 @@ while True:
 
     image = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
-    faces = face.detect_faces(image)
+    faces = face.detect_faces(image, False)
+
+    glasses = False
+    if faces is None or len(faces) < 1:
+        faces = face.detect_faces_with_glasses(image)
+        glasses = True
+
     if faces is not None:
         for i in range(0, len(faces)):
             if faces[i] is None:
+                print("Bad face object None")
                 continue
             if len(faces[i]) != 4:
                 print("Bad face object {0}".format(faces[i]))
@@ -86,6 +93,9 @@ while True:
                 label_str = "Guess: " + label_str
             else:
                 lavel_str = "Unknown"
+
+            if glasses:
+                lable_str = label_str + " (glasses)"
 
             print(label_str)
 

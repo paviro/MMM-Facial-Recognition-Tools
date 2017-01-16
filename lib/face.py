@@ -27,7 +27,7 @@ def detect_single(image):
     return faces[0]
 
 
-def detect_faces(image):
+def detect_faces(image, try_glasses=False):
     """Return bounds (x, y, width, height) of detected face in grayscale image.
     return all faces found in the image
     """
@@ -37,23 +37,16 @@ def detect_faces(image):
                                         minSize=config.HAAR_MIN_SIZE_FACE,
                                         flags=cv2.CASCADE_SCALE_IMAGE)
 
-    if len(faces) < 1:
-        # if we didn't find any faces, try the glasses detector
-        glasses = haar_glasses.detectMultiScale(image,
-                                              scaleFactor=config.HAAR_SCALE_FACTOR,
-                                              minNeighbors=config.HAAR_MIN_NEIGHBORS_EYES,
-                                              minSize=config.HAAR_MIN_SIZE_EYES,
-                                              flags=cv2.CASCADE_SCALE_IMAGE)
-        if len(glasses) > 0:
-            print('found glasses!')
-            face = eyes_to_face(glasses)
+    if try_glasses and len(faces) < 1:
+        faces = detect_faces_with_glasses(image)
+
     return faces
 
 def detect_faces_with_glasses(image):
-    """Return bounds (x, y, width, height) of detected face in grayscale image.
-    return single face found in the image if two eyes are detected with the
-    glasses cascade classifier. Currently we only know what to do if we find one 
-    pair of eyes.
+    """ Return bounds (x, y, width, height) of detected face in grayscale
+    image.  return single face found in the image if two eyes are
+    detected with the glasses cascade classifier. Currently we only
+    know what to do if we find one pair of eyes.
     """
     # if we didn't find any faces, try the glasses detector
     glasses = haar_glasses.detectMultiScale(image,
@@ -61,12 +54,9 @@ def detect_faces_with_glasses(image):
                                             minNeighbors=config.HAAR_MIN_NEIGHBORS_EYES,
                                             minSize=config.HAAR_MIN_SIZE_EYES,
                                             flags=cv2.CASCADE_SCALE_IMAGE)
-
     faces = None
     if len(glasses) > 0:
-            face = eyes_to_face(glasses)
-            if face:
-                faces = [face]
+        faces = eyes_to_face(glasses)
     return faces
 
 
@@ -82,11 +72,11 @@ def detect_eyes(image):
 def eyes_to_face(eyes):
     """Return bounds (x, y, width, height) of estimated face location based
     on the location of a pair of eyes.
-    TODO: Sort through multiple eyes (> 2) to find pairs and detect multiple 
+    TODO: Sort through multiple eyes (> 2) to find pairs and detect multiple
     faces.
     """
     if (len(eyes) != 2):
-        print("don't know what to do with {0} eyes.".format(len(eyes)))
+        print("Don't know what to do with {0} eye(s).".format(len(eyes)))
         for eye in eyes:
             print('{0:4d} {1:4d} {2:3d} {3:3d}'
                   .format(eye[0], eye[1], eye[2], eye[3]))
