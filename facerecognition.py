@@ -54,9 +54,10 @@ while True:
     faces = face.detect_faces(image, False)
 
     glasses = False
-    if faces is None or len(faces) < 1:
-        faces = face.detect_faces_with_glasses(image)
-        glasses = True
+    # glasses detection is not working
+    # if faces is None or len(faces) < 1:
+    #    faces = face.detect_faces_with_glasses(image)
+    #    glasses = True
 
     if faces is not None:
         for i in range(0, len(faces)):
