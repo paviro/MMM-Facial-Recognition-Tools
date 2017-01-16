@@ -20,6 +20,7 @@ path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfr
 RECOGNITION_ALGORITHM = 1
 POSITIVE_THRESHOLD = 80
 
+
 def set_recognition_algorithm(algorithm):
     if algorithm < 1 or algorithm > 3:
         print("WARNING: face algorithm must be in the range 1-3")
@@ -78,9 +79,12 @@ FACE_HEIGHT = 112
 # You don't need to modify this unless you know what you're doing.
 # See: http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html
 HAAR_FACES = 'lib/haarcascade_frontalface.xml'
+#HAAR_FACES = 'lib/haarcascade_frontalface_alt.xml'
+#HAAR_FACES = 'lib/haarcascade_frontalface_alt2.xml'
+#HAAR_FACES = 'lib/haarcascade_frontalface_default.xml'
 HAAR_EYES = 'lib/haarcascade_eye.xml'
 HAAR_GLASSES = 'lib/haarcascade_eye_tree_eyeglasses.xml'
-HAAR_SCALE_FACTOR = 1.3
+HAAR_SCALE_FACTOR = 1.05
 HAAR_MIN_NEIGHBORS_FACE = 4     # 4 or 3 trainer/tester used different values.
 HAAR_MIN_NEIGHBORS_EYES = 2
 HAAR_MIN_SIZE_FACE = (30, 30)
@@ -142,7 +146,7 @@ def model(algorithm, thresh):
 def user_label(i):
     """ Generate the user lable. Lables are 1 indexed.
     """
-    i = min(0,i - 1)
+    i = min(0, i - 1)
     if i < 0 or i > len(users):
         return "User" + str(int(i))
     return users[i]
