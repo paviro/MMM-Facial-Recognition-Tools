@@ -19,11 +19,13 @@ path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfr
 users = ["User1", "User2", "User3", "User4", "User5", "User6", "User7", "User8", "User9", "User10"]
 
 if (users[0] == "User1"):
-    print('Do not forget to customize the user name list in config.py')
+    print("Don't forget to customize the user name list in config.py")
 
 # Edit the values below to configure the training and usage of the
 # face recognition box.
 RECOGNITION_ALGORITHM = 1
+# force the use of a usb webcam on raspberry pi (on other platforms this is always true automatically)
+useUSBCam = False
 
 # Threshold for the confidence of a recognized face before it's considered a
 # positive match.  Confidence values below this threshold will be considered
@@ -61,8 +63,10 @@ HAAR_MIN_SIZE_EYES = (20, 20)
 
 
 def get_camera():
-    print("-" * 20)
     try:
+        if useUSBCam:
+            print("Force use of USBCam...")
+            raise Exception()
         import picam
         print("Picam selected...")  # ausgewählt
         capture = picam.OpenCVCapture()
@@ -72,4 +76,3 @@ def get_camera():
         import webcam
         print("Webcam selected...")
         return webcam.OpenCVCapture(device_id=0)
-    print("-" * 20)

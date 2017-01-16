@@ -13,6 +13,9 @@ import os
 
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
+# force the use of a usb webcam on raspberry pi (on other platforms this is always true automatically)
+useUSBCam = False
+
 # File to save and load face recognizer model.
 TRAINING_FILE = 'training.xml'
 
@@ -34,10 +37,15 @@ HAAR_MIN_SIZE = (30, 30)
 
 def get_camera():
     try:
+        if useUSBCam:
+            print("Force use of USBCam...")
+            raise Exception()
         import picam
+        print("Picam selected...")  # ausgewählt
         capture = picam.OpenCVCapture()
         capture.start()
         return capture
     except Exception:
         import webcam
+        print("Webcam selected...")
         return webcam.OpenCVCapture(device_id=0)
