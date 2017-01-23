@@ -1,9 +1,13 @@
 # TODO
 
+## Python 3 support
+
+* run py2to3 conversion on code
+
 ## opencv 3 support
 
 * DONE (but untested) detect opencv version 2 or 3 and use appropriates  sub-modules [start with this patch](https://github.com/falgard/MMM-Facial-Recognition-Tools/commit/06b303190893e5e6dddf35bd1a67f88abb8683b6) 
-* harvest other changes from [falgard](https://github.com/falgard/MMM-Facial-Recognition-Tools/commits/master)
+* DONE harvest other changes from [falgard](https://github.com/falgard/MMM-Facial-Recognition-Tools/commits/master)
 
 ## capture.py and lib/capture.py
 
@@ -21,8 +25,8 @@
 
 ## haarcascade
 
-* improve face recognition with glasses
-* improve face recognition of slightly tilted faces
+* DONE: improve face recognition with glasses (thid didn't work)
+* SKIP: improve face recognition of slightly tilted faces (requires training new HAARS Cascade)
 
 ## Meta-parameters
 
