@@ -25,6 +25,9 @@ import sys
 
 model = config.model(config.RECOGNITION_ALGORITHM, config.POSITIVE_THRESHOLD)
 
+# set preview to False to disable picamera preview
+preview = True
+
 print('Loading training data...')
 model.load("training.xml")
 print('Training data loaded!')
@@ -42,9 +45,9 @@ signal.signal(signal.SIGINT, clean_shutdown)
 signal.signal(signal.SIGTERM, clean_shutdown)
 signal.signal(signal.SIGSEGV, clean_shutdown)
 
-camera = config.get_camera()
+camera = config.get_camera(preview)
 
-time.sleep(1)   # give the camera a second to warm up
+time.sleep(0.1)   # give the camera a second to warm up
 while True:
     # camera video feed
     frame = camera.read()

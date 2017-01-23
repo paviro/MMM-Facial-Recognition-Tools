@@ -34,8 +34,8 @@ def walk_files(directory, match='*'):
             yield os.path.join(root, filename)
 
 
-def capture():
-    camera = config.get_camera()
+def capture(preview):
+    camera = config.get_camera(preview)
     # Create the directory for positive training images if it doesn't exist.
     if not os.path.exists(config.TRAINING_DIR + CAPTURE_DIR):
         os.makedirs(config.TRAINING_DIR + CAPTURE_DIR)

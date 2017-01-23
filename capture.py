@@ -18,6 +18,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import lib.capture as capture
 import lib.config as config
 
+# set preview to False to disable picamera preview
+preview = True
+
 print "What do you want to do?"
 print "[1] Capture training images from webcam"
 print "[2] Convert '*.jpg' pictures from other cameras to training images"
@@ -32,7 +35,7 @@ if choice == "1":
     print '-' * 20
     print "Starting process..."
     print
-    capture.capture()
+    capture.capture(preview)
 else:
     print
     print "Please enter path to images or drag and drop folder into terminal"

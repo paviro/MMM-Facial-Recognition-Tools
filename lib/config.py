@@ -78,10 +78,10 @@ FACE_HEIGHT = 112
 # Face detection cascade classifier configuration.
 # You don't need to modify this unless you know what you're doing.
 # See: http://docs.opencv.org/modules/objdetect/doc/cascade_classification.html
-HAAR_FACES = 'lib/haarcascade_frontalface.xml'
 #HAAR_FACES = 'lib/haarcascade_frontalface_alt.xml'
 #HAAR_FACES = 'lib/haarcascade_frontalface_alt2.xml'
 #HAAR_FACES = 'lib/haarcascade_frontalface_default.xml'
+HAAR_FACES = 'lib/haarcascade_frontalface.xml'
 HAAR_EYES = 'lib/haarcascade_eye.xml'
 HAAR_GLASSES = 'lib/haarcascade_eye_tree_eyeglasses.xml'
 HAAR_SCALE_FACTOR = 1.05
@@ -91,10 +91,10 @@ HAAR_MIN_SIZE_FACE = (30, 30)
 HAAR_MIN_SIZE_EYES = (20, 20)
 
 
-def get_camera():
+def get_camera(preview=True):
     try:
         import picam
-        capture = picam.OpenCVCapture(True)
+        capture = picam.OpenCVCapture(preview)
         capture.start()
         return capture
     except Exception:
