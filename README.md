@@ -7,14 +7,14 @@ The scripts in this directory are based on scripts from [pi-facerec-box](https:/
 
 ## Usage
 ### Capturing training images
-1. Make sure you have all dependencies (see bellow) installed.
+1. Make sure you have all dependencies (see below) installed.
 2. Run `python capture.py`.
 3. Decide whether you want to capture images from your web cam or convert existing `.jpg` images.
 4. Enter the name of the person you are about to capture. Images will be stored in a folder named after the captured person in `training_data/`.
 5. Follow screen instructions.
 
 ### Training model
-1. Make sure you have all dependencies (see bellow) installed.
+1. Make sure you have all dependencies (see below) installed.
 2. Make sure you have captured all your images.
 3. Run `python train.py`. The script will automatically scan the directory `training_data/` for your images.
 4. Wait. You will end up with a `training.xml` file in the current directory.
@@ -24,7 +24,7 @@ The scripts in this directory are based on scripts from [pi-facerec-box](https:/
 With this tool you can test if your facerecognition model is working.
 
 ## Usage
-1. Make sure you have all dependencies (see bellow) installed.
+1. Make sure you have all dependencies (see below) installed.
 2. Make sure your `training.xml` from running `train.py` is in this directory
 3. specify the face recognition algorithm in the environment with
 ```
