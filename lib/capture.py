@@ -16,12 +16,12 @@ import re
 
 import cv2
 
-import config
-import face
+from . import config
+from . import face
 
 
 def is_letter_input(letter):
-    input_char = raw_input()
+    input_char = input()
     return input_char.lower()
 
 
@@ -46,13 +46,13 @@ def capture(preview):
     if len(files) > 0:
         # Grab the count from the last filename.
         count = int(files[-1][-7:-4]) + 1
-    print 'Capturing positive training images.'
-    print 'Press enter to capture an image.'
-    print 'Press Ctrl-C to quit.'
+    print('Capturing positive training images.')
+    print('Press enter to capture an image.')
+    print('Press Ctrl-C to quit.')
     while True:
         try:
-            raw_input()
-            print 'Capturing image...'
+            input()
+            print('Capturing image...')
             image = camera.read()
             # Convert image to grayscale.
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -73,7 +73,7 @@ def capture(preview):
                                     CAPTURE_DIR,
                                     '%03d.pgm' % count)
             cv2.imwrite(filename, crop)
-            print 'Found face and wrote training image', filename
+            print('Found face and wrote training image', filename)
             count += 1
         except KeyboardInterrupt:
             camera.stop()

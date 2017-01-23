@@ -28,13 +28,13 @@ import numpy as np
 import lib.config as config
 import lib.face as face
 
-print "Which algorithm do you want to use?"
-print "[1] LBPHF (recommended)"
-print "[2] Fisherfaces"
-print "[3] Eigenfaces"
+print("Which algorithm do you want to use?")
+print("[1] LBPHF (recommended)")
+print("[2] Fisherfaces")
+print("[3] Eigenfaces")
 
-algorithm_choice = int(raw_input("--> "))
-print
+algorithm_choice = int(input("--> "))
+print('')
 
 
 def walk_files(directory, match='*'):
@@ -72,8 +72,8 @@ def normalize(X, low, high, dtype=None):
 
 
 if __name__ == '__main__':
-    print "Reading training images..."
-    print '-' * 20
+    print("Reading training images...")
+    print('-' * 20)
     faces = []
     labels = []
     IMAGE_DIRS_WITH_LABEL = [[0, "negative"]]
@@ -82,12 +82,13 @@ if __name__ == '__main__':
     pos_count = 0
 
     for i in range(len(IMAGE_DIRS)):
-        print "Assign label " + str(i + 1) + " to " + IMAGE_DIRS[i]
+        print("Assign label " + str(i + 1) + " to " + IMAGE_DIRS[i])
         IMAGE_DIRS_WITH_LABEL.append([i + 1, IMAGE_DIRS[i]])
-    print '-' * 20
-    print
+    print('-' * 20)
+    print('')
 
     # Für jedes Label/Namen Paar:
+    # for every label/name pair:
     for j in range(0, len(IMAGE_DIRS_WITH_LABEL)):
         # Label zu den Labels hinzufügen / Bilder zu den Gesichtern
         for filename in walk_files(config.TRAINING_DIR + str(IMAGE_DIRS_WITH_LABEL[j][1]), '*.pgm'):
@@ -96,15 +97,15 @@ if __name__ == '__main__':
             if IMAGE_DIRS_WITH_LABEL[j][0] != 0:
                 pos_count += 1
 
-            # Print statistic on how many pictures per person we have collected
-    print 'Read', pos_count, 'positive images and', labels.count(0), 'negative images.'
-    print
+    # Print statistic on how many pictures per person we have collected
+    print('Read', pos_count, 'positive images and', labels.count(0), 'negative images.')
+    print('')
     for j in range(1, max(labels) + 1):
-        print str(labels.count(j)) + " images from subject " + IMAGE_DIRS[j - 1]
+        print(str(labels.count(j)) + " images from subject " + IMAGE_DIRS[j - 1])
 
     # Train model
-    print '-' * 20
-    print
+    print('-' * 20)
+    print('')
     print('Training model type {0} with threshold {1}'
           .format(config.RECOGNITION_ALGORITHM, config.POSITIVE_THRESHOLD))
 
@@ -114,7 +115,7 @@ if __name__ == '__main__':
 
     # Save model results
     model.save(config.TRAINING_FILE)
-    print 'Training data saved to', config.TRAINING_FILE
-    print
-    print "Please add or update (if you added new people not just new images) " + str(IMAGE_DIRS) + " inside config.js (mirror module) or config.py (model tester). You can change the names to whatever you want, just keep the same order and you'll be fine."
-    print "Please add " + str(algorithm_choice) + " as your choosen algorithm inside config.js (mirror module) or config.py (model tester)."
+    print('Training data saved to', config.TRAINING_FILE)
+    print('')
+    print("Please add or update (if you added new people not just new images) " + str(IMAGE_DIRS) + " inside config.js (mirror module) or config.py (model tester). You can change the names to whatever you want, just keep the same order and you'll be fine.")
+    print("Please add " + str(algorithm_choice) + " as your choosen algorithm inside config.js (mirror module) or config.py (model tester).")
