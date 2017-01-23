@@ -2,7 +2,7 @@
 
 ## Python 3 support
 
-* run py2to3 conversion on code
+* PARTIAL: run py2to3 conversion on code (mostly done. still some possible issues with raw_input() calls)
 
 ## opencv 3 support
 
@@ -21,11 +21,11 @@
 ## facerecognition.py
 
 * Save unrecognized faces and allow to batch add to training data
-* eliminate JPEG errors "Corrupt JPEG data: premature end of data segment"
+* INVESTIGATED: eliminate JPEG errors "Corrupt JPEG data: premature end of data segment" (error is deep in cv2 capture code possible)
 
 ## haarcascade
 
-* DONE: improve face recognition with glasses (thid didn't work)
+* DONE: improve face recognition with glasses (this didn't work)
 * SKIP: improve face recognition of slightly tilted faces (requires training new HAARS Cascade)
 
 ## Meta-parameters
