@@ -33,7 +33,7 @@ print("[1] LBPHF (recommended)")
 print("[2] Fisherfaces")
 print("[3] Eigenfaces")
 
-algorithm_choice = int(input("--> "))
+algorithm_choice = int(raw_input("--> "))
 print('')
 
 
