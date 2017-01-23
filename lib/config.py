@@ -94,7 +94,7 @@ HAAR_MIN_SIZE_EYES = (20, 20)
 def get_camera():
     try:
         import picam
-        capture = picam.OpenCVCapture()
+        capture = picam.OpenCVCapture(True)
         capture.start()
         return capture
     except Exception:
