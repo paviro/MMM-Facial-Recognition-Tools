@@ -54,13 +54,7 @@ while True:
 
     image = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
-    faces = face.detect_faces(image, False)
-
-    glasses = False
-    # glasses detection is not working
-    # if faces is None or len(faces) < 1:
-    #    faces = face.detect_faces_with_glasses(image)
-    #    glasses = True
+    faces = face.detect_faces(image)
 
     if faces is not None:
         for i in range(0, len(faces)):
@@ -87,8 +81,7 @@ while True:
             if (label != -1 and label != 0):
                 label_str = config.user_label(label)
 
-            # If person is close to the camera use smaller
-            # POSITIVE_THRESHOLD
+            # the closer confidence is to zer the stronger the match
             if confidence < 0.6 * config.POSITIVE_THRESHOLD:
                 label_str = 'Strong:' + label_str
             elif confidence < config.POSITIVE_THRESHOLD:
@@ -98,14 +91,11 @@ while True:
             else:
                 lavel_str = "Unknown"
 
-            if glasses:
-                lable_str = label_str + " (glasses)"
-
             print(label_str)
 
             # face rectable
             cv2.rectangle(frame, (x, y), (x + w, y + h), 255)
-            # hight
+            # height
             cv2.putText(frame,
                         str(int(h)),
                         (x + w, y + h + 15),
@@ -129,7 +119,7 @@ while True:
                         0.5,
                         (255, 255, 255),
                         1)
-            if False and h > 250:
+            if h > 250:
                 # If person is close enough, mark the eyes
                 eyes = face.detect_eyes(face.crop(image, x, y, w, h))
                 for i in range(0, len(eyes)):

@@ -83,7 +83,6 @@ FACE_HEIGHT = 112
 #HAAR_FACES = 'lib/haarcascade_frontalface_default.xml'
 HAAR_FACES = 'lib/haarcascade_frontalface.xml'
 HAAR_EYES = 'lib/haarcascade_eye.xml'
-HAAR_GLASSES = 'lib/haarcascade_eye_tree_eyeglasses.xml'
 HAAR_SCALE_FACTOR = 1.05
 HAAR_MIN_NEIGHBORS_FACE = 4     # 4 or 3 trainer/tester used different values.
 HAAR_MIN_NEIGHBORS_EYES = 2
