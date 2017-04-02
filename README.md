@@ -1,5 +1,44 @@
 # Facetrainer Tool
-This repository contains tools to setup and train the [facial recognition module](https://github.com/paviro/MMM-Facial-Recognition) for the [MagicMirror](https://github.com/MichMich/MagicMirror). Read the README files in the two folders to learn how to use them.
+This repository contains tools to setup and train the [facial recognition module](https://github.com/paviro/MMM-Facial-Recognition) for the [MagicMirror](https://github.com/MichMich/MagicMirror).
+
+# Facetrainer Tool
+
+The scripts in this directory are based on scripts from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box) and should be used on a computer (with a webcam). You need OpenCV installed on your computer. It may work on a Pi but is probably pretty slow.
+
+## Usage
+### Capturing training images
+1. Make sure you have all dependencies (see below) installed.
+2. Run `python capture.py`.
+3. Decide whether you want to capture images from your web cam or convert existing `.jpg` images.
+4. Enter the name of the person you are about to capture. Images will be stored in a folder named after the captured person in `training_data/`.
+5. Follow screen instructions.
+
+### Training model
+1. Make sure you have all dependencies (see below) installed.
+2. Make sure you have captured all your images.
+3. Run `python train.py`. The script will automatically scan the directory `training_data/` for your images.
+4. Wait. You will end up with a `training.xml` file in the current directory.
+5. Copy down the `['name', 'name2','name3']` part because you will later need it for setting up your mirror's face recognition and to test your face recognition model.
+
+# Facerecognition Test Tool
+With this tool you can test if your facerecognition model is working.
+
+## Usage
+1. Make sure you have all dependencies (see below) installed.
+2. Make sure your `training.xml` from running `train.py` is in this directory
+3. specify the face recognition algorithm in the environment with
+```
+export FACE_ALGORITHM=1
+```
+4. specify your user labels in the environment with
+
+```
+export FACE_USERS=Alice,Bob,Casey,Doug
+```
+5. Run `python facerecognition.py`.
+
+## Dependencies
+- [OpenCV](http://opencv.org) (sudo apt-get install libopencv-dev python-opencv)
 
 ## Open Source Licenses
 ###[pi-facerec-box](https://github.com/tdicola/pi-facerec-box)

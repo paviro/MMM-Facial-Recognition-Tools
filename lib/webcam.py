@@ -27,10 +27,10 @@ class OpenCVCapture(object):
         self._camera = cv2.VideoCapture(device_id)
         if not self._camera.isOpened():
             self._camera.open()
-        # Start a thread to continuously capture frames.
-        # This must be done because different layers of buffering in the webcam
-        # and OS drivers will cause you to retrieve old frames if they aren't
-        # continuously read.
+        # Start a thread to continuously capture frames.  This must be
+        # done because different layers of buffering in the webcam and
+        # OS drivers will cause you to retrieve old frames if they
+        # aren't continuously read.
         self._capture_frame = None
         # Use a lock to prevent access concurrent access to the camera.
         self._capture_lock = threading.Lock()
@@ -48,8 +48,8 @@ class OpenCVCapture(object):
             time.sleep(1.0 / CAPTURE_HZ)
 
     def read(self):
-        """Read a single frame from the camera and return the data as an OpenCV
-        image (which is a numpy array).
+        """Read a single frame from the camera and return the data as an
+        OpenCV image (which is a numpy array).
         """
         frame = None
         with self._capture_lock:
@@ -63,4 +63,4 @@ class OpenCVCapture(object):
         return frame
 
     def stop(self):
-        print "Terminating..."
+        print("Terminating...")
