@@ -145,7 +145,7 @@ def model(algorithm, thresh):
 def user_label(i):
     """ Generate the user lable. Lables are 1 indexed.
     """
-    i = min(0, i - 1)
+    i = i - 1
     if i < 0 or i > len(users):
         return "User" + str(int(i))
     return users[i]
