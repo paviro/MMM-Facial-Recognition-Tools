@@ -3,7 +3,7 @@ This repository contains tools to setup and train the [facial recognition module
 
 # Facetrainer Tool
 
-The scripts in this directory are based on scripts from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box) and should be used on a computer (with a webcam). You need OpenCV installed on your computer. It may work on a Pi but is probably pretty slow.
+The scripts in this directory are based on scripts from [pi-facerec-box](https://github.com/tdicola/pi-facerec-box) and should be used on a computer (with a webcam). You need OpenCV installed on your computer. It works on a RaspberryPi.
 
 ## Usage
 ### Capturing training images
@@ -38,7 +38,37 @@ export FACE_USERS=Alice,Bob,Casey,Doug
 5. Run `python facerecognition.py`.
 
 ## Dependencies
-- [OpenCV](http://opencv.org) (sudo apt-get install libopencv-dev python-opencv)
+
+### OpenCV
+
+To install [OpenCV](http://opencv.org) run:
+
+```
+sudo apt-get install libopencv-dev python-opencv)
+```
+
+If you are using virtual environments you will need to need to copy
+the opencv python modules into your virutal environment path. That
+will look something like this:
+
+```
+cp /usr/lib/python2.7/dist-packages/cv* ~/.virtualenvs/MY_VIRTUAL_ENV/lib/python2.7/site-packages/
+```
+
+Where ``python2.7`` will be the name of your python version where
+opencv was installed and ``MY_VIRTUAL_ENV`` is the name of your
+virtual environment.
+
+### Python dependancies
+
+Install the required python packages. 
+
+```
+pip install -r requirements.txt
+```
+
+Currently this is just the ``future`` module for making the scripts python 2 and 3 cross compatible.
+
 
 ## Open Source Licenses
 ###[pi-facerec-box](https://github.com/tdicola/pi-facerec-box)

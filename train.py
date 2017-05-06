@@ -22,6 +22,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import fnmatch
 import os
 
+# to install builtins run `pip install future` 
+from builtins import input
+
 import cv2
 import numpy as np
 
@@ -33,7 +36,7 @@ print("[1] LBPHF (recommended)")
 print("[2] Fisherfaces")
 print("[3] Eigenfaces")
 
-algorithm_choice = int(raw_input("--> "))
+algorithm_choice = int(input("--> "))
 print('')
 
 
