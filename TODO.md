@@ -1,13 +1,17 @@
 # TODO
 
-## Python 3 support
+## Python 3 support EXPERIMENTAL
 
-* PARTIAL: run py2to3 conversion on code (mostly done. still some possible issues with raw_input() calls)
+* DONE run py2to3 conversion on code 
+* DONE removed raw_imput
+* DONE test on python 2
+* TODO test on python 3
 
-## opencv 3 support
+## opencv 3 support INCOMPLETE
 
 * DONE (but untested) detect opencv version 2 or 3 and use appropriates  sub-modules [start with this patch](https://github.com/falgard/MMM-Facial-Recognition-Tools/commit/06b303190893e5e6dddf35bd1a67f88abb8683b6) 
 * DONE harvest other changes from [falgard](https://github.com/falgard/MMM-Facial-Recognition-Tools/commits/master)
+* TODO 
 
 ## capture.py and lib/capture.py
 

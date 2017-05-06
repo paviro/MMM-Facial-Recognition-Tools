@@ -8,6 +8,8 @@ Based on work by Tony DiCola (Copyright 2013) (MIT License)
 Run this script to capture positive images for training the face recognizer.
 """
 from __future__ import division
+# need to run `pip install future` for builtins (python 2 & 3 compatibility)
+from   builtins import input
 
 import fnmatch
 import glob
