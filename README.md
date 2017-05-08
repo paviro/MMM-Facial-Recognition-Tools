@@ -44,7 +44,7 @@ export FACE_USERS=Alice,Bob,Casey,Doug
 To install [OpenCV](http://opencv.org) run:
 
 ```
-sudo apt-get install libopencv-dev python-opencv)
+sudo apt-get install libopencv-dev python-opencv
 ```
 
 If you are using virtual environments you will need to need to copy
