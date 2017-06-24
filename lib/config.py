@@ -12,7 +12,7 @@ import os
 import platform
 import cv2
 
-(CV_MAJOR_VER, CV_MINOR_VER, mv1, mv2) = cv2.__version__.split(".")
+(CV_MAJOR_VER, CV_MINOR_VER) = cv2.__version__.split(".")[:2]
 
 _platform = platform.system().lower()
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
