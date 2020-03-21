@@ -1,3 +1,7 @@
+# DEPRECIATED
+
+This module is no longer supported. When it does work, the facial recognition methods used performed poorly.
+
 # Facetrainer Tool
 This repository contains tools to setup and train the [facial recognition module](https://github.com/paviro/MMM-Facial-Recognition) for the [MagicMirror](https://github.com/MichMich/MagicMirror).
 
